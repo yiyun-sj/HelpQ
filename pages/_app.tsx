@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     return snippet.min(options)
   }
 
-          // const [computedUserHmac, setComputedUserHmac] = useState('')
+  // const [computedUserHmac, setComputedUserHmac] = useState('')
   // const [isLoading, setIsLoading] = useState(false)
 
   // useEffect(() => {
@@ -33,15 +33,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         id='segmentScript'
       />
 
-
-    {/* <CourierProvider
+      {/* <CourierProvider
       userId={props.userId}
       userSignature={computedUserHmac}
       clientKey={process.env.COURIER_CLIENT_KEY}
     >
       <Toast /> */}
-    <Component {...pageProps} />
-    {/* </CourierProvider> */}
+      <Component {...pageProps} />
+      {/* </CourierProvider> */}
     </>
   )
 }
