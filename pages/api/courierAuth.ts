@@ -17,7 +17,7 @@ export default function handler(
 
   const computedUserHmac = crypto
     .createHmac('sha256', process.env.COURIER_SECRET)
-    .update(req.body)
+    .update(req.body.authUserId)
     .digest('hex')
   res.status(200).json({ computedUserHmac })
 }
