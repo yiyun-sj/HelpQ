@@ -2,23 +2,18 @@
 import * as snippet from '@segment/snippet'
 import { CourierProvider } from '@trycourier/react-provider'
 import { Toast } from '@trycourier/react-toast'
-import {
-  getAuth,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithPopup,
-  signOut,
-} from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import type { AppProps } from 'next/app'
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
+import AdminBar from '../components/AdminBar'
+import AnonSignIn from '../components/AnonSignIn'
 import { UserContext } from '../constants/contexts'
-import { createUser, listenToUser } from '../services/users'
+import { listenToUser } from '../services/users'
 import '../styles/globals.css'
 import { User } from '../types/users'
 
 const auth = getAuth()
-const provider = new GoogleAuthProvider()
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [authUserId, setAuthUserId] = useState('')
@@ -36,22 +31,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     () => listenToUser({ userId: authUserId, cb: setUser }),
     [authUserId]
   )
-
-  const signIn = () => {
-    signOut(auth)
-    signInWithPopup(auth, provider)
-      .then((authUser) =>
-        createUser({
-          userId: authUser.user.uid,
-          name: authUser.user.displayName ?? authUser.user.email ?? '',
-          isAdmin: true,
-        })
-      )
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.error(error)
-      })
-  }
 
   useEffect(() => {
     if (!authUserId) return
@@ -89,11 +68,20 @@ function MyApp({ Component, pageProps }: AppProps) {
           userSignature={computedUserHmac}
           clientKey={process.env.COURIER_CLIENT_KEY}
         >
-          <button type='submit' onClick={() => signIn()}>
-            Sign In as Admin
-          </button>
           <Toast />
-          <Component {...pageProps} />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              minHeight: '100vh',
+            }}
+          >
+            <AdminBar />
+            <div style={{ flex: 1 }}>
+              {user ? <Component {...pageProps} /> : <AnonSignIn />}
+            </div>
+          </div>
         </CourierProvider>
       </UserContext.Provider>
     </>
