@@ -1,19 +1,26 @@
 import { getAuth, signInAnonymously } from 'firebase/auth'
+import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../constants/contexts'
+import { createLobby } from '../services/lobby'
 import { createUser } from '../services/users'
-
-const auth = getAuth()
 
 export default function Home() {
   const user = useContext(UserContext)
+  const router = useRouter()
+  const auth = getAuth()
 
   const [name, setName] = useState('')
 
   useEffect(() => {
-    // @ts-ignore
     window?.analytics?.page('testing')
   }, [])
+
+  const handleCreateLobby = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    const lobby = await createLobby()
+    router.push(`/lobbies/${lobby.id}`)
+  }
 
   const signIn = () => {
     signInAnonymously(auth).then((authUser) =>
@@ -31,6 +38,9 @@ export default function Home() {
         />
         <button type='submit' onClick={() => signIn()}>
           Confirm
+        </button>
+        <button type='button' onClick={handleCreateLobby}>
+          Create lobby
         </button>
       </>
     )

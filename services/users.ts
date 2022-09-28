@@ -17,7 +17,7 @@ export const createUser = async ({
     isAdmin,
   })
 
-export const listentoUser = ({
+export const listenToUser = ({
   userId,
   cb,
 }: {

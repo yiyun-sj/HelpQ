@@ -11,7 +11,7 @@ import type { AppProps } from 'next/app'
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
 import { UserContext } from '../constants/contexts'
-import { createUser, listentoUser } from '../services/users'
+import { createUser, listenToUser } from '../services/users'
 import '../styles/globals.css'
 import { User } from '../types/users'
 
@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   })
   useEffect(
-    () => listentoUser({ userId: authUserId, cb: setUser }),
+    () => listenToUser({ userId: authUserId, cb: setUser }),
     [authUserId]
   )
 
