@@ -4,6 +4,7 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth'
+import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { UserContext } from '../constants/contexts'
 import { createUser, updateUserName } from '../services/users'
@@ -33,6 +34,10 @@ export default function AdminBar() {
     <div style={{ display: 'flex', width: '100%', position: 'sticky' }}>
       {user?.isAdmin ? (
         <>
+          <Link href='/admin'>
+            <button type='submit'>Admin Dashboard</button>
+          </Link>
+          <div style={{ flex: 1 }} />
           <input
             placeholder='Enter name'
             onChange={(e) => setName(e.currentTarget.value)}
@@ -44,7 +49,6 @@ export default function AdminBar() {
           >
             Update Name
           </button>
-          <div style={{ flex: 1 }} />
           <button type='submit' onClick={() => signOut(auth)}>
             Sign Out
           </button>
