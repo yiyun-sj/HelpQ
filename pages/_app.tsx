@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import * as snippet from '@segment/snippet'
+import { CourierProvider } from '@trycourier/react-provider'
+import { Toast } from '@trycourier/react-toast'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import type { AppProps } from 'next/app'
 import Script from 'next/script'
@@ -16,6 +18,7 @@ const auth = getAuth()
 function MyApp({ Component, pageProps }: AppProps) {
   const [authUserId, setAuthUserId] = useState('')
   const [user, setUser] = useState<User>()
+  const [computedUserHmac, setComputedUserHmac] = useState('')
 
   onAuthStateChanged(auth, (authUser) => {
     if (authUser) {
@@ -29,6 +32,19 @@ function MyApp({ Component, pageProps }: AppProps) {
     [authUserId]
   )
 
+  useEffect(() => {
+    if (!authUserId) return
+    fetch('/api/courierAuth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ authUserId }),
+    })
+      .then((res) => res.json())
+      .then((res) => setComputedUserHmac(res.computedUserHmac))
+  }, [authUserId])
+
   const loadSegment = () => {
     const options = {
       apiKey: process.env.NEXT_PUBLIC_SEGMENT_WRITE_KEY,
@@ -38,26 +54,35 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
     return snippet.min(options)
   }
+
   return (
     <>
       <Script
         dangerouslySetInnerHTML={{ __html: loadSegment() }}
         id='segmentScript'
       />
+
       <UserContext.Provider value={user}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
-            minHeight: '100vh',
-          }}
+        <CourierProvider
+          userId={authUserId}
+          userSignature={computedUserHmac}
+          clientKey={process.env.COURIER_CLIENT_KEY}
         >
-          <AdminBar />
-          <div style={{ flex: 1 }}>
-            {user ? <Component {...pageProps} /> : <AnonSignIn />}
+          <Toast />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              minHeight: '100vh',
+            }}
+          >
+            <AdminBar />
+            <div style={{ flex: 1 }}>
+              {user ? <Component {...pageProps} /> : <AnonSignIn />}
+            </div>
           </div>
-        </div>
+        </CourierProvider>
       </UserContext.Provider>
     </>
   )

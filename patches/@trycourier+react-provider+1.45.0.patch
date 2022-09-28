@@ -1,0 +1,22 @@
+diff --git a/node_modules/@trycourier/react-provider/typings/types.d.ts b/node_modules/@trycourier/react-provider/typings/types.d.ts
+index 4e96d78..b1de322 100644
+--- a/node_modules/@trycourier/react-provider/typings/types.d.ts
++++ b/node_modules/@trycourier/react-provider/typings/types.d.ts
+@@ -1,6 +1,7 @@
++import { PropsWithChildren } from "react";
++import { ErrorEvent } from "reconnecting-websocket";
+ import { Transport } from "./transports";
+ import { Interceptor } from "./transports/types";
+-import { ErrorEvent } from "reconnecting-websocket";
+ export declare type ErrorEventHandler = (event: ErrorEvent) => void;
+ export declare type WSOptions = {
+     url?: string;
+@@ -36,7 +37,7 @@ export interface Brand {
+         tertiary?: string;
+     };
+ }
+-export interface ICourierProviderProps {
++export interface ICourierProviderProps extends PropsWithChildren {
+     apiUrl?: string;
+     authorization?: string;
+     brand?: Brand;
