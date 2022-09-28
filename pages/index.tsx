@@ -1,3 +1,4 @@
+import { IconButton, SmallPlusIcon, Text, toaster, Tooltip } from 'evergreen-ui'
 import { useRouter } from 'next/router'
 import { useContext, useEffect } from 'react'
 import { UserContext } from '../constants/contexts'
@@ -14,16 +15,23 @@ export default function Home() {
   const handleCreateLobby = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const lobby = await createLobby()
+    toaster.success('Lobby created')
     router.push(`/lobbies/${lobby.id}`)
   }
 
   if (!user) {
-    return <div>Not a user!</div>
+    return <Text>Not a user!</Text>
   }
 
   return (
-    <button type='button' onClick={handleCreateLobby}>
-      Create lobby
-    </button>
+    <Tooltip content='Create lobby'>
+      <IconButton
+        icon={SmallPlusIcon}
+        iconSize={100}
+        onClick={handleCreateLobby}
+        width={400}
+        height={300}
+      />
+    </Tooltip>
   )
 }

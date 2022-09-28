@@ -2,6 +2,7 @@
 import * as snippet from '@segment/snippet'
 import { CourierProvider } from '@trycourier/react-provider'
 import { Toast } from '@trycourier/react-toast'
+import { Pane } from 'evergreen-ui'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import type { AppProps } from 'next/app'
 import Script from 'next/script'
@@ -69,19 +70,24 @@ function MyApp({ Component, pageProps }: AppProps) {
           clientKey={process.env.COURIER_CLIENT_KEY}
         >
           <Toast />
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              minHeight: '100vh',
-            }}
+          <Pane
+            display='flex'
+            flexDirection='column'
+            width='100%'
+            minHeight='100vh'
           >
             <AdminBar />
-            <div style={{ flex: 1 }}>
+            <Pane
+              flex={1}
+              display='flex'
+              justifyContent='center'
+              alignItems='center'
+              flexDirection='column'
+              gap={16}
+            >
               {user ? <Component {...pageProps} /> : <AnonSignIn />}
-            </div>
-          </div>
+            </Pane>
+          </Pane>
         </CourierProvider>
       </UserContext.Provider>
     </>

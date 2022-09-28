@@ -1,3 +1,4 @@
+import { Button, Pane, TextInput } from 'evergreen-ui'
 import {
   getAuth,
   GoogleAuthProvider,
@@ -5,7 +6,7 @@ import {
   signOut,
 } from 'firebase/auth'
 import Link from 'next/link'
-import { useContext, useState } from 'react'
+import { ChangeEvent, useContext, useState } from 'react'
 import { UserContext } from '../constants/contexts'
 import { createUser, updateUserName } from '../services/users'
 
@@ -31,36 +32,32 @@ export default function AdminBar() {
       })
   }
   return (
-    <div style={{ display: 'flex', width: '100%', position: 'sticky' }}>
+    <Pane display='flex' width='100%' position='sticky' padding={8} gap={8}>
       {user?.isAdmin ? (
         <>
           <Link href='/admin'>
-            <button type='submit'>Admin Dashboard</button>
+            <Button>{user.name ? `${user.name}'s ` : ''}Admin Dashboard</Button>
           </Link>
-          <div style={{ flex: 1 }} />
-          <input
+          <Pane style={{ flex: 1 }} />
+          <TextInput
             placeholder='Enter name'
-            onChange={(e) => setName(e.currentTarget.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setName(e.currentTarget.value)
+            }
             value={name}
           />
-          <button
-            type='submit'
-            onClick={() => updateUserName({ userId: user.id, name })}
-          >
+          <Button onClick={() => updateUserName({ userId: user.id, name })}>
             Update Name
-          </button>
-          <button type='submit' onClick={() => signOut(auth)}>
-            Sign Out
-          </button>
+          </Button>
+          <Pane borderRight='1px solid gray' />
+          <Button onClick={() => signOut(auth)}>Sign Out</Button>
         </>
       ) : (
         <>
-          <div style={{ flex: 1 }} />
-          <button type='submit' onClick={() => signIn()}>
-            Sign In as Admin
-          </button>
+          <Pane style={{ flex: 1 }} />
+          <Button onClick={() => signIn()}>Sign In as Admin</Button>
         </>
       )}
-    </div>
+    </Pane>
   )
 }

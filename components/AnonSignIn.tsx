@@ -1,5 +1,6 @@
+import { Button, Text, TextInput } from 'evergreen-ui'
 import { getAuth, signInAnonymously } from 'firebase/auth'
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { createUser } from '../services/users'
 
 export default function AnonSignIn() {
@@ -15,14 +16,19 @@ export default function AnonSignIn() {
 
   return (
     <>
-      <input
+      <Text size={600} fontWeight='bold'>
+        Get Started with HelpQ!
+      </Text>
+      <TextInput
         placeholder='Enter your name'
-        onChange={(e) => setName(e.currentTarget.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setName(e.currentTarget.value)
+        }
         value={name}
       />
-      <button type='submit' onClick={() => signIn()}>
+      <Button appearance='primary' onClick={() => signIn()}>
         Confirm
-      </button>
+      </Button>
     </>
   )
 }
