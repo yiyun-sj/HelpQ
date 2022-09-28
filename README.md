@@ -1,1 +1,1 @@
-Mini app using Next.js, Firestore, and Framer Motion to have fun with some SSR!
+Help Q - A mental health app for Courier Hacks! 
