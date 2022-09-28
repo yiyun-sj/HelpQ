@@ -15,6 +15,7 @@
     "test-all": "npm run check-format && npm run check-lint && npm run check-types"
   },
   "dependencies": {
+    "@segment/snippet": "^4.15.3",
     "firebase": "^9.9.1",
     "next": "12.2.3",
     "react": "18.2.0",
