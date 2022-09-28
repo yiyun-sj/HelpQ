@@ -1,18 +1,13 @@
-import { useEffect, useState } from 'react'
-import { listenToLobby } from '../../services/lobby'
-import { Lobby } from '../../types/lobby'
+import { useRouter } from 'next/router'
+import useLobby from '../../hooks/useLobby'
 
 export default function LobbyPage() {
-  const [currentLobby, setCurrentLobby] = useState<Lobby>()
+  const { query } = useRouter()
+  const lobbyId = query.id?.toString()
 
-  const lobbyId = '123'
+  const { lobby } = useLobby({ lobbyId })
 
-  useEffect(() => {
-    if (!lobbyId) return undefined
-    return listenToLobby({ lobbyId, onLobbyChange: setCurrentLobby })
-  }, [lobbyId])
-
-  if (!currentLobby) return <div>No lobby found</div>
+  if (!lobby) return <div>No lobby found</div>
 
   return <div>got a lobby</div>
 }

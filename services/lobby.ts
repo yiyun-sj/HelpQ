@@ -23,7 +23,7 @@ export function listenToLobby({
   lobbyId: string
   onLobbyChange: (updatedLobby: Lobby | undefined) => void
 }) {
-  return onSnapshot(doc(db, 'cities', lobbyId), (docSnapshot) => {
+  return onSnapshot(doc(db, 'lobbies', lobbyId), (docSnapshot) => {
     if (!docSnapshot.data()) {
       onLobbyChange(undefined)
     } else {
