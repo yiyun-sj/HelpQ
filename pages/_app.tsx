@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         createUser({
           userId: authUser.user.uid,
           name: authUser.user.displayName ?? authUser.user.email ?? '',
-          isAdmin: false,
+          isAdmin: true,
         })
       )
       .catch((error) => {
