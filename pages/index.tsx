@@ -18,12 +18,12 @@ export default function Home() {
   }
 
   if (!user) {
-    return (
-      <button type='button' onClick={handleCreateLobby}>
-        Create lobby
-      </button>
-    )
+    return <div>Not a user!</div>
   }
 
-  return <div>Welcome!</div>
+  return (
+    <button type='button' onClick={handleCreateLobby}>
+      Create lobby
+    </button>
+  )
 }
