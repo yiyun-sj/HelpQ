@@ -2,6 +2,7 @@ import { IconButton, SmallPlusIcon, Text, toaster, Tooltip } from 'evergreen-ui'
 import { useRouter } from 'next/router'
 import { useContext, useEffect } from 'react'
 import { UserContext } from '../constants/contexts'
+import SegmentEvents from '../constants/segments'
 import { createLobby } from '../services/lobby'
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
     e.preventDefault()
     const lobby = await createLobby()
     toaster.success('Lobby created')
+    window.analytics?.track(SegmentEvents.LOBBY_CREATED)
     router.push(`/lobbies/${lobby.id}`)
   }
 
