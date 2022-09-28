@@ -2,13 +2,13 @@ import { getAuth, signInAnonymously } from 'firebase/auth'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../constants/contexts'
+import { createLobby } from '../services/lobby'
 import { createUser } from '../services/users'
 
 export default function Home() {
-  const router = useRouter()
-
-  const auth = getAuth()
   const user = useContext(UserContext)
+  const router = useRouter()
+  const auth = getAuth()
 
   const [name, setName] = useState('')
 
@@ -16,10 +16,12 @@ export default function Home() {
     window?.analytics?.page('testing')
   }, [])
 
-  const handleCreateLobby = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleCreateLobby = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    router.push('/lobbies/abc')
+    const lobby = await createLobby()
+    router.push(`/lobbies/${lobby.id}`)
   }
+
   const signIn = () => {
     signInAnonymously(auth).then((authUser) =>
       createUser({ userId: authUser.user.uid, name, isAdmin: false })

@@ -1,5 +1,12 @@
-import { addDoc, collection, Timestamp } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  doc,
+  onSnapshot,
+  Timestamp,
+} from 'firebase/firestore'
 import db from '../constants/firebase'
+import { Lobby } from '../types/lobby'
 
 export async function createLobby() {
   const docRef = await addDoc(collection(db, 'lobbies'), {
@@ -9,6 +16,21 @@ export async function createLobby() {
   return docRef
 }
 
-export function listenToLobby() {
-  return undefined
+export function listenToLobby({
+  lobbyId,
+  onLobbyChange,
+}: {
+  lobbyId: string
+  onLobbyChange: (updatedLobby: Lobby | undefined) => void
+}) {
+  return onSnapshot(doc(db, 'cities', lobbyId), (docSnapshot) => {
+    if (!docSnapshot.data()) {
+      onLobbyChange(undefined)
+    } else {
+      onLobbyChange({
+        id: docSnapshot.id,
+        ...docSnapshot.data(),
+      } as unknown as Lobby)
+    }
+  })
 }
