@@ -1,5 +1,5 @@
 import { addDoc, collection, Timestamp } from 'firebase/firestore'
-import db from '../firebase'
+import db from '../constants/firebase'
 
 export async function createLobby() {
   const docRef = await addDoc(collection(db, 'lobbies'), {
