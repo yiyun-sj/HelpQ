@@ -14,13 +14,34 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
     return snippet.min(options)
   }
+
+          // const [computedUserHmac, setComputedUserHmac] = useState('')
+  // const [isLoading, setIsLoading] = useState(false)
+
+  // useEffect(() => {
+  //   setIsLoading(true)
+  //   fetch('/api/courierAuth')
+  //     .then((res) => res.json())
+  //     .then(setComputedUserHmac)
+  //     .finally(() => setIsLoading(false))
+  // }, [])
+
   return (
     <>
       <Script
         dangerouslySetInnerHTML={{ __html: loadSegment() }}
         id='segmentScript'
       />
-      <Component {...pageProps} />
+
+
+    {/* <CourierProvider
+      userId={props.userId}
+      userSignature={computedUserHmac}
+      clientKey={process.env.COURIER_CLIENT_KEY}
+    >
+      <Toast /> */}
+    <Component {...pageProps} />
+    {/* </CourierProvider> */}
     </>
   )
 }
