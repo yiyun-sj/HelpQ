@@ -3,6 +3,8 @@
 # HelpQ
 A mental health chat app for Courier Hacks!
 
+## Built With
+
 ## Live Website Link
 Be sure to checkout our live website at: https://helpq.vercel.app/
 
@@ -18,7 +20,9 @@ We are big fans of the Bell Let's Talk event, so we wanted to build something th
 HelpQ provides a simple way for people to anonymously talk to mental health professionals.
 
 #### How we built it
-We used Next.js for our front-end, and Firestore as our database. Firestore provides an awesome client, there was no need for a back-end. On the landing on the page, users can sign in using google authentication, or they can stay anonymous. If an anonymous user needs help, then create a "lobby", which will then trigger a Segment event, which then triggers a courier automation to notify our authenticated users that someone would like to talk. 
+We used Next.js for our front-end, and Firestore as our database. Firestore provides an awesome client, so there was no need for a back-end. On the landing page, users can sign in using google authentication, or they can stay anonymous. If an anonymous user needs help, then create a "lobby", which will then trigger a Segment event, which then triggers a Courier automation to notify our authenticated users that someone would like to talk. 
+
+Other details: Deployed on Vercel, and we integrated Git hooks using Husky to keep everything clean - even as a team of two!
 
 #### Challenges we ran into
 We ran into some issues with the react components that courier offers since we were on React 18. 
@@ -27,7 +31,7 @@ We ran into some issues with the react components that courier offers since we w
 Given we started 24h before the deadline, we are very proud of what we were able to spin up!
 
 #### What we learned
-Start earlier next time! 
+Start earlier next time! Jokes aside - it was awesome to see just how powerful courier automations can be, all without a back-end!
 
 #### What's next for HelpQ
 We're looking to polish up our UI, get the react components working (toast and inbox), and improve the courier automation to send to a list of authenticated users.
