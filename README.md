@@ -1,8 +1,15 @@
-
 ![full_width](https://user-images.githubusercontent.com/63019625/192915304-9e61eac6-f3df-4136-b9bd-a4afdafd4da6.png)
 
-## Help Q
+# HelpQ
 A mental health chat app for Courier Hacks!
+
+## Live Website Link
+Be sure to checkout our live website at: https://helpq.vercel.app/
+
+## YouTube Showcase
+Checkout our video demo below, where we show off Next.js, Firebase, Segment, and Courier in action!
+
+[![helpq-demo-video](https://user-images.githubusercontent.com/63019625/192915831-4433756f-a7f6-4603-b82c-4868b7c7b2b0.png)](https://youtu.be/9K7giBJQ-48)
 
 #### Inspiration
 We are big fans of the Bell Let's Talk event, so we wanted to build something that could maybe be used for it!
