@@ -1,3 +1,4 @@
+import { Card, Pane, Text } from 'evergreen-ui'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../constants/contexts'
@@ -19,12 +20,29 @@ export default function Admin() {
     )
 
   return (
-    <div>
+    <Pane
+      flex={1}
+      width='100%'
+      padding={16}
+      display='flex'
+      flexWrap='wrap'
+      gap={16}
+    >
       {lobbies.map((lobby, index) => (
         <Link key={lobby.id} href={`/lobbies/${lobby.id}`}>
-          <div>Lobby {index}</div>
+          <Card
+            background='white'
+            width={400}
+            height={300}
+            hoverElevation={2}
+            cursor='pointer'
+            display='grid'
+            placeItems='center'
+          >
+            <Text>Lobby {index}</Text>
+          </Card>
         </Link>
       ))}
-    </div>
+    </Pane>
   )
 }
